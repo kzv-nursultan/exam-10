@@ -1,0 +1,24 @@
+create database kaziev_nursultan_news;
+use kaziev_nursultan_news;
+
+create table if not exists news_table
+(
+	id int auto_increment
+		primary key,
+	news_title varchar(255) not null,
+	news_body text not null,
+	news_image varchar(255) null,
+	news_date datetime not null
+);
+
+create table if not exists comments_table
+(
+	id int auto_increment
+		primary key,
+	news_id int not null,
+	comment_author varchar(255) not null,
+	comment_text text not null,
+	constraint comments_table_news_table_id_fk
+		foreign key (news_id) references news_table (id)
+			on update cascade on delete cascade
+);

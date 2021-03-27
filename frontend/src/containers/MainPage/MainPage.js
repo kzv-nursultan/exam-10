@@ -23,7 +23,8 @@ const MainPage = () => {
             dispatch(getData('/news'));
         } catch (e) {
             console.log(e)
-        }
+        };
+
     },[dispatch]);
 
     const list = (
@@ -35,7 +36,7 @@ const MainPage = () => {
             title={object.news_title}
             date={object.news_date}/>
         ))
-    )
+    );
 
 
     return (

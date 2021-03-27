@@ -33,7 +33,6 @@ router.get('/:id', async (req,res)=>{
 
 router.post('/', upload.single('image'), async (req,res)=>{
     const news = req.body;
-    console.log(req.body)
     if(news.title && news.body) {
         news.date = new Date();
         if(req.file) {
@@ -47,6 +46,12 @@ router.post('/', upload.single('image'), async (req,res)=>{
     } else {
         res.status(400).send('Bad request!')
     }
-})
+});
+
+router.delete('/:id', async (req,res)=> {
+    await mysqlDb.getConnection().query(
+        'DELETE FROM news_table WHERE id = ?',[req.params.id]);
+    res.send('Deleted');
+});
 
 module.exports = router;
