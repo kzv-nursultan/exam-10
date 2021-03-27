@@ -42,7 +42,7 @@ const News = props => {
                         </Typography>
                         <Typography variant='h6'>
                             {props.date}
-                            <Button>
+                            <Button onClick={moreHandler}>
                                 Read more
                             </Button>
                         </Typography>

@@ -19,7 +19,11 @@ const MainPage = () => {
     const news = useSelector( state => state.data.value);
 
     useEffect(()=>{
-        dispatch(getData('/news'));
+        try {
+            dispatch(getData('/news'));
+        } catch (e) {
+            console.log(e)
+        }
     },[dispatch]);
 
     const list = (

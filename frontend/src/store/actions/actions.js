@@ -8,6 +8,8 @@ export const GET_DATA_REQUEST = "GET_DATA_REQUEST";
 export const GET_DATA_SUCCESS = "GET_DATA_SUCCESS";
 export const GET_DATA_FAILURE = "GET_DATA_FAILURE";
 
+export const GET_ONE_DATA_SUCCESS = "GET_ONE_DATA_SUCCESS";
+
 export const postDataRequest = () => (
     {type: POST_DATA_REQUEST}
 );
@@ -27,6 +29,10 @@ export const getDataSuccess = (value) => (
 export const getDataFailure = () => (
     {type:GET_DATA_FAILURE}
 );
+
+export const getOneDataSuccess = value => (
+    {type: GET_ONE_DATA_SUCCESS, value}
+)
 
 export const postData = (url, item) => {
     return async dispatch => {
@@ -51,3 +57,16 @@ export const getData = (url) => {
         };
     };
 };
+
+export const getOneData = (url) => {
+    return async dispatch => {
+        try {
+            dispatch(getDataRequest());
+            const response = await axiosData.get(url);
+            dispatch(getOneDataSuccess(response.data));
+        } catch (e) {
+            dispatch(getDataFailure(e));
+        };
+    };
+};
+
