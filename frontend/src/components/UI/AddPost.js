@@ -1,9 +1,12 @@
 import React, {useState, useRef} from 'react';
+import { useDispatch } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
-import { Button } from '@material-ui/core';
+import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
+import { postData } from '../../store/actions/actions';
+
 
 const rand = () => {
   return Math.round(Math.random() * 20) - 10;
@@ -49,6 +52,7 @@ const useStyles = makeStyles((theme) => ({
 const  AddPost = () => {
   const classes = useStyles();
   const inputRef = useRef();
+  const dispatch = useDispatch()
   const [modalStyle] = useState(getModalStyle);
   const [open, setOpen] = useState(false);
   const [news, setNews] = useState({
@@ -73,6 +77,7 @@ const  AddPost = () => {
         ...prevState,
         [name]:value 
     }));
+    console.log(news)
 };
 
   const fileChangeHandler = e => {
@@ -96,13 +101,29 @@ const inputClick = () => {
     inputRef.current.click();
 };
 
+const onSubmitHandler = async (e) => {
+    e.preventDefault();
+
+    const formData  = new FormData();
+
+    Object.keys(news).forEach(key=>{
+        formData.append(key, news[key]);
+    });
+
+    try {
+        await dispatch(postData('/news', formData));
+    } catch (e) {
+        console.log(e)
+    }
+};
+
   const body = (
     <div style={modalStyle} className={classes.paper}>
       <Grid>
           <h3>
               Add news
           </h3>
-            <form className={classes.form}>
+            <form className={classes.form} onSubmit={onSubmitHandler}>
                 <TextField
                 name='title'
                 label='News Title'
@@ -139,7 +160,7 @@ const inputClick = () => {
                 label='Image Name'
                 onClick={inputClick}/>
                 <Button type='submit' variant='contained' color='primary'
-                className={classes.sendBtn}>
+                className={classes.sendBtn} onClick={handleClose}>
                     send
                 </Button>
             </form>

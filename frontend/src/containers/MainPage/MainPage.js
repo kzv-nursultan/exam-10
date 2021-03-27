@@ -18,7 +18,7 @@ const MainPage = () => {
                 <h1 className={classes.news}>
                     News
                 </h1>
-                <Grid item direction='row' alignItems=''>
+                <Grid container item direction='row' alignItems='center' justify='space-evenly'>
                     <h2>
                         Posts
                     </h2>

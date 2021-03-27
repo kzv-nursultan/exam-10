@@ -33,6 +33,7 @@ router.get('/:id', async (req,res)=>{
 
 router.post('/', upload.single('image'), async (req,res)=>{
     const news = req.body;
+    console.log(req.body)
     if(news.title && news.body) {
         news.date = new Date();
         if(req.file) {
