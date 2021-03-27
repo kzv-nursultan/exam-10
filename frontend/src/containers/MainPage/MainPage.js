@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Grid from '@material-ui/core/Grid';
 import News from '../../components/News/News';
-import { Button, makeStyles } from '@material-ui/core';
+import {  makeStyles } from '@material-ui/core';
 import AddPost from '../../components/UI/AddPost';
+import { useDispatch, useSelector } from 'react-redux';
+import { getData } from '../../store/actions/actions';
 
 const useStyles = makeStyles({
     news:{
@@ -11,7 +13,27 @@ const useStyles = makeStyles({
 })
 
 const MainPage = () => {
-    const classes = useStyles()
+    const classes = useStyles();
+    const dispatch = useDispatch();
+    
+    const news = useSelector( state => state.data.value);
+
+    useEffect(()=>{
+        dispatch(getData('/news'));
+    },[dispatch]);
+
+    const list = (
+        news.map(object=>(
+            <News
+            key = {object.id}
+            id = {object.id}
+            image={object.news_image}
+            title={object.news_title}
+            date={object.news_date}/>
+        ))
+    )
+
+
     return (
         <>
             <Grid container direction='column'>
@@ -26,7 +48,7 @@ const MainPage = () => {
                 </Grid>
             </Grid>
             <Grid container direction='column'>
-                <News/>
+                {list}
             </Grid>
         </>
     );

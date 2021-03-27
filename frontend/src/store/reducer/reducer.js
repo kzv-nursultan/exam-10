@@ -3,7 +3,7 @@ import { GET_DATA_FAILURE, GET_DATA_SUCCESS, GET_DATA_REQUEST,
 
 const initialState = {
     loading:false,
-    value:{},
+    value:[],
     error:false
 };
 

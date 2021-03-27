@@ -3,7 +3,12 @@ import MainPage from './containers/MainPage/MainPage';
 
 function App() {
   return (
-  <MainPage/>
+    <BrowserRouter>
+    <Switch>
+      <Route path='/' exact component={MainPage}/>
+      <Route path='/news/:id' component={}/>
+    </Switch>
+  </BrowserRouter>
   );
 }
 
